@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Grocery...</title>
+        <meta charset="windows-1252">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <link href="style.css" rel="stylesheet">
+       <script src="action.js"></script>
+    </head>
+    <body>
+              <div class="inputList">
+                  <table>
+                      <tr>
+                          <th>Items :  </th>
+                          <th>Unit(s) :</th>
+                          <th>Amount :</th>
+                         </tr> 
+                    
+                       <tr>  
+                         <td><input type="text" name="item" id="item" required></td>
+                         <td><input type="number" name="unit" id="unit"></td>
+                         <td><input type="number" name="amt" id="amt"></td>
+                
+                    <td><button onclick="addRow()">Add</button></td>
+                    </tr>
+                    </table>
+                  
+              </div>      
+            <div class="GT">
+              <p style="font-size: 50px;">Grand Total :</p>  <p id="GT"class="total"></p>
+              </div>
+        <div class="container">
+            <div class="tab tab-1">
+                <table id="table" border="1">
+                    <tr>
+                        <th>Items Name</th>
+                        <th>Unit(s)</th>
+                        <th>Amount</th>
+                        <th>Total</th>
+                    </tr>
+                  
+                </table>
+                <p></p>
+               
+            </div>
+            
+        </div>
+       
+
+
+
+       <script>
+
+           
+          var rIndex=1;
+table = document.getElementById("table");
+  function checkEmptyInput()
+{
+  var isEmpty = false,
+  item = document.getElementById("item").value,
+   unit = document.getElementById("unit").value,
+   amt = document.getElementById("amt").value;
+            
+    if(item === ""){
+   alert("Item Connot Be Empty");
+    isEmpty = true;
+     }
+    else if(unit === ""){
+     alert("Unit Connot Be Empty");
+     isEmpty = true;
+     }
+     else if(amt === ""){
+     alert("Amount Connot Be Empty");
+     isEmpty = true;
+     }
+     return isEmpty;
+ }
+
+function addRow()
+{
+    if(!checkEmptyInput()){
+var newRow = table.insertRow();
+  newRow.setAttribute('id',rIndex);
+    cell1 = newRow.insertCell(0),
+    cell2 = newRow.insertCell(1),
+    cell3 = newRow.insertCell(2),
+   cell4 = newRow.insertCell(3),
+    cell5 = newRow.insertCell(4),
+    cell6 = newRow.insertCell(5),
+    item = document.getElementById("item").value,
+    unit = document.getElementById("unit").value,
+    amt = document.getElementById("amt").value;
+
+     var sum=unit*amt;
+cell1.innerHTML = item;
+cell2.innerHTML = unit;
+cell3.innerHTML = amt;
+cell4.innerHTML = unit*amt;
+cell5.innerHTML = "<button onClick='deleterow("+rIndex+")'>Delete</button>";
+cell6.innerHTML = "<button  id='editButton' onClick='edit("+rIndex+")'>Edit</button>";
+   
+let curVal=document.getElementById("GT").innerHTML;
+if(curVal.length==0)
+curVal=sum;
+else
+curVal=parseFloat(curVal)+sum;
+document.getElementById("GT").innerHTML=curVal;
+rIndex++;
+document.getElementById("item").value="",
+document.getElementById("unit").value="",
+document.getElementById("amt").value="";
+
+    }
+}
+
+
+
+function deleterow(rowToDelete) 
+{
+let curVal=document.getElementById(rowToDelete).childNodes[3].textContent;
+let curcart=document.getElementById("GT").innerHTML;
+curcart=parseFloat(curcart)-curVal;
+document.getElementById("GT").innerHTML=curcart;
+  document.getElementById(rowToDelete).remove();
+  
+
+}
+
+function edit(rowToEdit)
+{    let itemName=document.getElementById(rowToEdit).childNodes[0].innerHTML;
+    let unit=document.getElementById(rowToEdit).childNodes[1].innerHTML;
+    let amt=document.getElementById(rowToEdit).childNodes[2].innerHTML;
+    document.getElementById(rowToEdit).childNodes[0].innerHTML='<input type="text" id="item'+rowToEdit+'" value='+itemName+'></input>';
+    document.getElementById(rowToEdit).childNodes[1].innerHTML='<input type="number"id="unit'+rowToEdit+'"value='+unit+'></input>';
+    document.getElementById(rowToEdit).childNodes[2].innerHTML='<input type="number"id="amt'+rowToEdit+'"value='+amt+'></input>';
+    document.getElementById(rowToEdit).childNodes[5].innerHTML='<button  id="saveButton" onClick="save('+rowToEdit+')">Save</button>';
+ 
+}
+function save(rowToSave)
+{
+    document.getElementById(rowToSave).childNodes[0].innerHTML=document.getElementById("item"+rowToSave).value;
+    document.getElementById(rowToSave).childNodes[1].innerHTML=document.getElementById("unit"+rowToSave).value;
+    document.getElementById(rowToSave).childNodes[2].innerHTML=document.getElementById("amt"+rowToSave).value;
+    let preVal=document.getElementById(rowToSave).childNodes[3].innerHTML;
+    document.getElementById(rowToSave).childNodes[3].innerHTML=(document.getElementById(rowToSave).childNodes[1].innerHTML)*(document.getElementById(rowToSave).childNodes[2].innerHTML);
+   
+    let curVal=parseFloat(document.getElementById(rowToSave).childNodes[3].textContent);
+let curcart=parseFloat(document.getElementById("GT").innerHTML)-preVal;
+curcart=curcart+curVal;
+document.getElementById("GT").innerHTML=curcart;
+    document.getElementById(rowToSave).childNodes[5].innerHTML="<button  id='editButton' onClick='edit("+rowToSave+")'>Edit</button>";
+}
+
+  </script>
+    </body>
+</html>

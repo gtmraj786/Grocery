@@ -1,0 +1,39 @@
+.container{overflow: hidden}
+.tab{float: left;}
+.tab-2{margin-left: 50px}
+.tab-2 input{display: block;margin-bottom: 10px}
+tr{transition:all .25s ease-in-out}
+tr:hover{background-color:#EEE;cursor: pointer}
+
+
+.container{
+    position: absolute;
+    top:50%;
+    left: 65%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: gold;
+}
+body{
+
+    background-color: gainsboro;
+}
+.inputList{
+    position: absolute;
+    top:20%;
+    left: 20%;
+    transform: translateX(-50%) translateY(-50%);
+    background-color: lightblue;
+
+}
+.GT{
+    position: absolute;
+    top:40%;
+    left: 20%;
+    transform: translateX(-50%) translateY(-50%);
+    
+
+}
+.total
+{
+    font-size: 50px;
+}
